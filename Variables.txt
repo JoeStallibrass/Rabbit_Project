@@ -1,0 +1,23 @@
+Class MaleRabbit
+Age 
+Maturity 
+Death
+
+Class FemaleRabbit
+Age 
+Maturity 
+Death
+Pregnant
+
+
+Class RabbitEnclosure
+rabbit_list
+Month-counter
+rabbit_count
+end_month
+Maybe separate:
+female_rabbit_list
+male_rabbit_list
+
+Class RabbitBreeding
+rabbit_pairs
