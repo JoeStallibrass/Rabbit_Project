@@ -1,0 +1,39 @@
+
+male Rabbit class:
+
+initialises with:
+
+ age, maturity_bool, death_bool
+
+
+once 3, maturity bool true
+once 60, death bool true
+
+
+female rabbit class:
+
+initialises with:
+
+age, maturity_bool, pregnant_bool, death_bool
+
+once 3, maturity bool true
+once 60, death bool true
+
+
+enclosure class: created with a duration set
+import time
+
+initialises with rabbit_list, month_counter, End_month
+
+handles how many rabbits are in the enclosure and the addition of new rabbits when birth is given
+also handles the time ticking upwards
+
+
+
+breed class:
+
+given the list of rabbits in the enclosure
+
+goes through all male rabbits and pairs them with female rabbits (mature ones)
+
+

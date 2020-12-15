@@ -1,0 +1,1 @@
+# takes from base rabbit class but adds pregnancy boolean
