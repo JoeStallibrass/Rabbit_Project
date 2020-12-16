@@ -1,7 +1,6 @@
 # this class will receive a list of mature rabbits
 # it will go through all non pregnant females and match them up with a male (only one male so not too bad atm)
 # it will also go through pregnant females and generate their offspring
-
 # OFFSPRING: As a user I want a litter of offspring between 1 and 14 and to have a random chance to be either male or female.
 # SEX: As a user I want to the program to be able to pair an available male and female who are mature to mate at the earliest opportunity.
 
