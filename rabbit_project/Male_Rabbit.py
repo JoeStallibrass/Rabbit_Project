@@ -2,7 +2,7 @@
 
 ## As a user I want the male rabbits to mate an unlimited number of times."
 
-from rabbit_project.Rabbit import Rabbit
+from Rabbit import Rabbit
 
 
 class MaleRabbit(Rabbit):

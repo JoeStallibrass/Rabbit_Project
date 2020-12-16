@@ -1,64 +1,81 @@
 import time
+from Male_Rabbit import MaleRabbit
+from Female_Rabbit import FemaleRabbit
 
 
-# \/ Here we will import the classes which should contain the list/definition
-# from RabbitClasses import rabbit_dict
+# Importing Group 1's classes
 
-class Enclosure:
+
+class Enclosure():
+
     def __init__(self):
         # First we initialise year input by asking user the simulation duration
-        # This is where the user fulfills the population limit
-        self.year_input = int(input("Enter a number of years:"))
+        # This is where the user fulfills the 'population limit'
+        self.year_input = int(input("Enter a number of years:\n"))
+
         # The program runs on a monthly basis, so years converted to months and proceeds
         self.month_input = self.year_input * 12
+
         # Initialise the rabbit list by inheriting it from the other group
         # self.rabbit_list = Breeding.self.function.self.rabbit_list
-        self.dead_rabbits = []
-        self.alive_rabbits = []
-        self.alive_per_month_male = []
-        self.alive_per_month_female = []
+        self.dead_rabbits = 0
+        self.alive_per_month_male = 0
+        self.alive_per_month_female = 0
+        self.rabbit_list = []
 
-    def simulation_rate(self):
-        # while ascending month hasn't passed the total month input, this method will print one month per second
-        ascending_month = 0
-        while ascending_month != self.month_input:
-            time.sleep(1)
-            ascending_month += 1
-            print(f"Month {ascending_month}")
-            # Here we will print the len of the list from the male and female rabbit Classes
-
-            # alive_population(self)
-
-            print(f" the number of male rabbits alive is {len(self.alive_per_month_male)}")
-            print(f" the number of female rabbits alive is {len(self.alive_per_month_female)}")
-
-            # for rabbit in self.rabbit_list:
-            #     index[i] += 1  # Where i is the variable for age in their list
-            #     if index[i] == 60:
-            #         self.dead is True
-
-            # Input the code from Group 3 that is responsible for breeding
-
-        if ascending_month == self.month_input:
-            # total_rabbits = len(male dict/class) + len(female dict/class)
-            print("the total number of alive rabbits: 1000 (example value)")
-
-            print(f" The total number of dead rabbits is: {len(self.dead_rabbits)}")
-
-    def rabbit_alive_status(self):
-        # this function
-        for rabbit in self.rabbit_list:
-            if self.dead is False:
-                self.alive_rabbits.append(rabbit)
-            elif self.dead is True:
-                self.dead_rabbits().append(rabbit)
+    def starting_pair(self):
+        # This method is called at the very start of the simulation to create a starting pair
+        start_male_rabbit = MaleRabbit()
+        start_female_rabbit = FemaleRabbit()
+        self.rabbit_list.append(start_male_rabbit)
+        self.rabbit_list.append(start_female_rabbit)
+        print(len(self.rabbit_list))
 
     def rabbit_gender_status(self):
+        # This method counts how many males and females are alive each month, resetting on each itteration
+        self.alive_per_month_male = 0
+        self.alive_per_month_female = 0
         for rabbit in self.rabbit_list:
-            if self.sex == "M":
-                self.alive_per_month_male.append(rabbit)
-            elif self.sex == "F":
-                self.alive_per_month_female.append(rabbit)
+            if rabbit.sex == "M":
+                self.alive_per_month_male += 1
+            elif rabbit.sex == "F":
+                self.alive_per_month_female += 1
+        print(f"Male rabbits alive is {self.alive_per_month_male}")
+        print(f"Female rabbits alive is {self.alive_per_month_female}")
+
+    def rabbit_alive_status(self):
+        # This method keeps track of the total that are alive and removes
+        for rabbit in self.rabbit_list:
+            if rabbit.dead:
+                print(rabbit.sex, rabbit.dead)
+                self.dead_rabbits += 1
+                self.rabbit_list.remove(rabbit)
+
+    def simulation_rate(self):
+
+        # Here the method prints the month for each iteration, at 1 month per second
+        self.starting_pair()
+        ascending_month = 0
+        while ascending_month != self.month_input:
+            time.sleep(0.01)
+            ascending_month += 1
+            print(f"Month {ascending_month}")
+
+            # For each rabbit, Group 1's class is called to run a few updates:
+            # Age is checked, maturity, and whether the rabbit should be dead
+            for rabbit in self.rabbit_list:
+                # rabbit.aging has built in functions that call upon more methods
+                rabbit.aging()
+
+            # Calls the method that checks whether they are alive or dead
+            self.rabbit_alive_status()
+
+            # Calls the method that checks how many are alive for each gender during this month
+            self.rabbit_gender_status()
+
+        if ascending_month == self.month_input:
+            print(f"The total number of alive rabbits is: {len(self.rabbit_list)}")
+            print(f"The total number of dead rabbits is: {self.dead_rabbits}")
 
 
 initiator = Enclosure()
