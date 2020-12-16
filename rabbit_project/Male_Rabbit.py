@@ -8,6 +8,9 @@ class MaleRabbit(Rabbit):
     def __init__(self):
         super().__init__()
         self.sex = "M"
+        self.available = True
+
+
 
 
 
