@@ -33,6 +33,7 @@ class male_rabbit_test(unittest.TestCase):
 
     def test_init(self):
         self.assertEqual(self.male_rabbit.sex, "M")
+        self.assertTrue(self.male_rabbit.available)
 
 class female_rabbit_test(unittest.TestCase):
     female_rabbit = FemaleRabbit()
