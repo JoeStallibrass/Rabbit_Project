@@ -14,53 +14,64 @@ self.pregnant   bool
 and self.dead bool
 the ones u care about will be mature sex and pregnant
 """
-from Female_Rabbit import *
-from Male_Rabbit import *
-from Enclosure import *
-from Rabbit import *
+from rabbit_project.Female_Rabbit import *
+from rabbit_project.Male_Rabbit import *
+from rabbit_project.Enclosure import *
 import random
 
 
 
-class RabbitBreeding(Enclosure):
+class RabbitBreeding(Enclosure, FemaleRabbit, MaleRabbit):
 
     def __init__(self):
         super().__init__()
-        rabbit_list = self.enclosure.rabbit_list
-        new_rabbit_list = []
+        self.rabbit_list = Enclosure.rabbit_list
+        self.new_rabbit_list = []
+
 
     def breed_check(self):
-        if self.male.mature not in rabbit_list:
-            return True
-        else:
-            return False
+        breeding = False
+        while not breeding:
+            for rabbit in self.alive_rabbits:
+                if rabbit.sex == "M" and rabbit.available is True:
+                    breeding = True
+                    rabbit.available = False
+
 
     def age_check(self, rabbit):
         self.breed_check()
         if self.breed_check():
-            if self.female.mature:
-                if self.female.pregnant is False:
+            if rabbit.sex == "F" and rabbit.mature is True:
+                if not rabbit.pregnant:
 
-                    self.female.pregnant = bool(random.getrandbits(1))
+                    rabbit.pregnant = bool(random.getrandbits(1))
                     self.new_rabbit_list.append(rabbit)
                 else:
                     self.give_birth()
-                    self.female.pregnant = False
+                    rabbit.pregnant = False
                     self.new_rabbit_list.append(rabbit)
+        else:
+            if rabbit.pregnant is True:
+                self.give_birth()
+                rabbit.pregnant = False
+                self.new_rabbit_list.append(rabbit)
 
     def give_birth(self):
         for i in range(random.randint(1, 15)):
-            self.new_rabbit_list.append(new_born_rabbit)
+            sex = random.randint(0, 1)
+            if sex == 1:
+                rabbit = MaleRabbit()
+            else:
+                rabbit = FemaleRabbit()
+
+            self.new_rabbit_list.append(rabbit)
 
     def new_population(self):
-        if self.breed_check is True:
-            for rabbit in self.rabbit_list:
-                if self.male:
-                    self.new_rabbit_list.append(rabbit)
-                else:
-                    self.age_check(rabbit)
-
-        else:
+        for rabbit in self.rabbit_list:
+            if rabbit.sex == "M":
+                self.new_rabbit_list.append(rabbit)
+            else:
+                self.age_check(rabbit)
 
         return self.new_rabbit_list
 
