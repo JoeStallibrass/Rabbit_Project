@@ -15,31 +15,41 @@ the ones u care about will be mature sex and pregnant
 """
 from rabbit_project.Female_Rabbit import *
 from rabbit_project.Male_Rabbit import *
-from rabbit_project.Enclosure import *
+#from rabbit_project.Enclosure import *
 import random
 
 
 
-class RabbitBreeding(Enclosure, FemaleRabbit, MaleRabbit):
+class RabbitBreeding():
 
-    def __init__(self):
-        super().__init__()
-        self.rabbit_list = Enclosure.rabbit_list
+    def __init__(self, rabbit_list):
+        #super().__init__()
+        self.rabbit_list = rabbit_list
         self.new_rabbit_list = []
+        self.new_population()
 
+
+    def new_population(self):
+        self.can_breed = self.breed_check()
+        print(self.can_breed)
+        for rabbit in self.rabbit_list:
+            if rabbit.sex == "M":
+                self.new_rabbit_list.append(rabbit)
+            else:
+                self.age_check(rabbit)
 
     def breed_check(self):
-        breeding = False
-        while not breeding:
-            for rabbit in self.alive_rabbits:
-                if rabbit.sex == "M" and rabbit.available is True:
-                    breeding = True
-                    rabbit.available = False
+        for rabbit in self.rabbit_list:
+            if rabbit.sex == "M" and rabbit.available is True and rabbit.mature is True:
+                rabbit.available = False
+                return True
+            else:
+                rabbit.available = True
+        return False
 
 
     def age_check(self, rabbit):
-        self.breed_check()
-        if self.breed_check():
+        if self.can_breed:
             if rabbit.sex == "F" and rabbit.mature is True:
                 if not rabbit.pregnant:
 
@@ -49,10 +59,14 @@ class RabbitBreeding(Enclosure, FemaleRabbit, MaleRabbit):
                     self.give_birth()
                     rabbit.pregnant = False
                     self.new_rabbit_list.append(rabbit)
+            else:
+                self.new_rabbit_list.append(rabbit)
         else:
             if rabbit.pregnant is True:
                 self.give_birth()
                 rabbit.pregnant = False
+                self.new_rabbit_list.append(rabbit)
+            else:
                 self.new_rabbit_list.append(rabbit)
 
     def give_birth(self):
@@ -65,14 +79,7 @@ class RabbitBreeding(Enclosure, FemaleRabbit, MaleRabbit):
 
             self.new_rabbit_list.append(rabbit)
 
-    def new_population(self):
-        for rabbit in self.rabbit_list:
-            if rabbit.sex == "M":
-                self.new_rabbit_list.append(rabbit)
-            else:
-                self.age_check(rabbit)
 
-        return self.new_rabbit_list
 
 
 
