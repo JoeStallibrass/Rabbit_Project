@@ -91,7 +91,3 @@ class Enclosure():
         if ascending_month == self.month_input:
             print(f"The total number of alive rabbits is: {len(self.rabbit_list)}")
             print(f"The total number of dead rabbits is: {self.dead_rabbits}")
-
-
-initiator = Enclosure()
-initiator.simulation_rate()
