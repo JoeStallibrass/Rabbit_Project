@@ -5,7 +5,7 @@ from rabbit_project.Male_Rabbit import *
 import random
 import json
 
-f = open('rabbit_default.json')
+f = open('rabbit_project/rabbit_default.json')
 rabbit_config = json.load(f)
 
 
@@ -25,7 +25,6 @@ class RabbitBreeding():
     def new_population(self):
         self.can_breed = self.breed_check()
         for rabbit in self.rabbit_list:
-            print(rabbit.mature)
             if rabbit.sex == "M":
                 self.new_rabbit_list.append(rabbit)
             else:

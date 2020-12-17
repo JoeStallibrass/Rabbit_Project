@@ -1,5 +1,5 @@
 
-from Rabbit import Rabbit
+from rabbit_project.Rabbit import Rabbit
 import json
 class FemaleRabbit(Rabbit):
 

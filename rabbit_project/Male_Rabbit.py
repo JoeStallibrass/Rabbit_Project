@@ -1,6 +1,6 @@
  
 import json
-from Rabbit import Rabbit
+from rabbit_project.Rabbit import Rabbit
 
 
 class MaleRabbit(Rabbit):

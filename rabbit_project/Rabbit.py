@@ -2,7 +2,7 @@
 import json
 
 
-f = open('rabbit_default.json')
+f = open('rabbit_project/rabbit_default.json')
 rabbit_config = json.load(f)
 
 class Rabbit:

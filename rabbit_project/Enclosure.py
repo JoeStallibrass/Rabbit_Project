@@ -1,9 +1,9 @@
 import time
-from Male_Rabbit import MaleRabbit
-from Female_Rabbit import FemaleRabbit
-from Breeding import RabbitBreeding
+from rabbit_project.Male_Rabbit import MaleRabbit
+from rabbit_project.Female_Rabbit import FemaleRabbit
+from rabbit_project.Breeding import RabbitBreeding
 import json
-f = open('rabbit_default.json')
+f = open('rabbit_project/rabbit_default.json')
 rabbit_config = json.load(f)
 
 
@@ -97,6 +97,3 @@ class Enclosure():
             print(f"The total number of alive rabbits is: {len(self.rabbit_list)}")
             print(f"The total number of dead rabbits is: {self.dead_rabbits}")
 
-sim = Enclosure()
-
-sim.simulation_start()
