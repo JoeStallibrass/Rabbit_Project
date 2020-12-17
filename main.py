@@ -1,6 +1,5 @@
 from rabbit_project.Enclosure import Enclosure
-import sysconfig
 
+sim = Enclosure()
 
-initiator = Enclosure()
-initiator.simulation_rate()
+sim.simulation_start()

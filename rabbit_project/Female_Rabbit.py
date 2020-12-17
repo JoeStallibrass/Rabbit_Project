@@ -1,7 +1,6 @@
-# takes from base rabbit class but adds pregnancy boolean
-# As a user I want female rabbits to be unavailable for breeding, for the month after giving birth.
-from Rabbit import Rabbit
 
+from Rabbit import Rabbit
+import json
 class FemaleRabbit(Rabbit):
 
     # inherits from rabbit class
