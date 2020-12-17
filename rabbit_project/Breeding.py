@@ -1,38 +1,31 @@
-# this class will receive a list of mature rabbits
-# it will go through all non pregnant females and match them up with a male (only one male so not too bad atm)
-# it will also go through pregnant females and generate their offspring
-# OFFSPRING: As a user I want a litter of offspring between 1 and 14 and to have a random chance to be either male or female.
-# SEX: As a user I want to the program to be able to pair an available male and female who are mature to mate at the earliest opportunity.
 
-"""
-rabbits have
-self.age int
-self.mature bool
-self.sex      (either 'M' or 'F)
-self.pregnant   bool
-and self.dead bool
-the ones u care about will be mature sex and pregnant
-"""
+
 from rabbit_project.Female_Rabbit import *
 from rabbit_project.Male_Rabbit import *
-#from rabbit_project.Enclosure import *
 import random
+import json
 
+f = open('rabbit_default.json')
+rabbit_config = json.load(f)
 
 
 class RabbitBreeding():
 
     def __init__(self, rabbit_list):
-        #super().__init__()
         self.rabbit_list = rabbit_list
         self.new_rabbit_list = []
-        self.new_population()
+        self.max_num_babies = rabbit_config['max_num_babies']
+        self.ratio_male_female = rabbit_config['ratio_male_to_female']
+        self.female_fertility = rabbit_config['female_fertility']
 
+
+
+        self.new_population()
 
     def new_population(self):
         self.can_breed = self.breed_check()
-        print(self.can_breed)
         for rabbit in self.rabbit_list:
+            print(rabbit.mature)
             if rabbit.sex == "M":
                 self.new_rabbit_list.append(rabbit)
             else:
@@ -52,8 +45,9 @@ class RabbitBreeding():
         if self.can_breed:
             if rabbit.sex == "F" and rabbit.mature is True:
                 if not rabbit.pregnant:
-
-                    rabbit.pregnant = bool(random.getrandbits(1))
+                    fertility = random.random()
+                    if fertility < self.female_fertility:
+                        rabbit.pregnant = True
                     self.new_rabbit_list.append(rabbit)
                 else:
                     self.give_birth()
@@ -70,9 +64,9 @@ class RabbitBreeding():
                 self.new_rabbit_list.append(rabbit)
 
     def give_birth(self):
-        for i in range(random.randint(1, 15)):
-            sex = random.randint(0, 1)
-            if sex == 1:
+        for i in range(random.randint(0, self.max_num_babies)):
+            sex = random.random()
+            if sex < self.ratio_male_female:
                 rabbit = MaleRabbit()
             else:
                 rabbit = FemaleRabbit()
