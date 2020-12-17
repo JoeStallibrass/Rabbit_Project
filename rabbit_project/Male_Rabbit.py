@@ -1,4 +1,4 @@
-
+ 
 import json
 from Rabbit import Rabbit
 
@@ -10,6 +10,7 @@ class MaleRabbit(Rabbit):
         super().__init__()
         self.sex = "M"
         self.available = True
+
 
 
 

@@ -72,8 +72,3 @@ class RabbitBreeding():
                 rabbit = FemaleRabbit()
 
             self.new_rabbit_list.append(rabbit)
-
-
-
-
-
