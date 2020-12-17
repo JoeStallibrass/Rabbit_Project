@@ -1,7 +1,7 @@
 import time
-from Male_Rabbit import MaleRabbit
-from Female_Rabbit import FemaleRabbit
-from Breeding import RabbitBreeding
+from rabbit_project.Male_Rabbit import MaleRabbit
+from rabbit_project.Female_Rabbit import FemaleRabbit
+from rabbit_project.Breeding import RabbitBreeding
 
 
 # Importing Group 1's classes
@@ -23,6 +23,7 @@ class Enclosure():
         self.alive_per_month_male = 0
         self.alive_per_month_female = 0
         self.rabbit_list = []
+        self.ascending_month = 0
 
     def starting_pair(self):
         # This method is called at the very start of the simulation to create a starting pair
@@ -62,13 +63,13 @@ class Enclosure():
 
         # Here the method prints the month for each iteration, at 1 month per second
         self.starting_pair()
-        ascending_month = 0
+        # ascending_month = 0
 
 
-        while ascending_month != self.month_input:
-            time.sleep(1)
-            ascending_month += 1
-            print(f"Month {ascending_month}")
+        while self.ascending_month != self.month_input:
+            time.sleep(0.1)
+            self.ascending_month += 1
+            print(f"Month {self.ascending_month}")
 
             # For each rabbit, Group 1's class is called to run a few updates:
             # Age is checked, maturity, and whether the rabbit should be dead
@@ -88,10 +89,10 @@ class Enclosure():
             self.rabbit_list = new_rabbit_list.new_rabbit_list
 
 
-        if ascending_month == self.month_input:
+        if self.ascending_month == self.month_input:
             print(f"The total number of alive rabbits is: {len(self.rabbit_list)}")
             print(f"The total number of dead rabbits is: {self.dead_rabbits}")
 
 
-initiator = Enclosure()
-initiator.simulation_rate()
+# initiator = Enclosure()
+# initiator.simulation_rate()

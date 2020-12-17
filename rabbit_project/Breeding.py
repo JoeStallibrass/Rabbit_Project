@@ -70,7 +70,7 @@ class RabbitBreeding():
                 self.new_rabbit_list.append(rabbit)
 
     def give_birth(self):
-        for i in range(random.randint(1, 15)):
+        for i in range(random.randint(1, 2)):
             sex = random.randint(0, 1)
             if sex == 1:
                 rabbit = MaleRabbit()

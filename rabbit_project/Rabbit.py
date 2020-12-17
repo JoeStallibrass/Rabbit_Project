@@ -10,9 +10,10 @@ class Rabbit:
 
     # method to age rabbit by one month, check for death and maturity
     def aging(self):
-        self.age += 1
-        self.death()
-        self.maturity()
+        if not self.dead:
+            self.age += 1
+            self.death()
+            self.maturity()
 
     # set death to True when rabbit is 60 months old
     def death(self):
