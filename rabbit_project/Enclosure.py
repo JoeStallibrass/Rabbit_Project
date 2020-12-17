@@ -1,6 +1,7 @@
 import time
 from Male_Rabbit import MaleRabbit
 from Female_Rabbit import FemaleRabbit
+from Breeding import RabbitBreeding
 
 
 # Importing Group 1's classes
@@ -65,7 +66,7 @@ class Enclosure():
 
 
         while ascending_month != self.month_input:
-            time.sleep(0.01)
+            time.sleep(1)
             ascending_month += 1
             print(f"Month {ascending_month}")
 
@@ -82,10 +83,11 @@ class Enclosure():
             # Calls the method that checks how many are alive for each gender during this month
             self.rabbit_gender_status()
 
+            #call breeding function
+            new_rabbit_list = RabbitBreeding(self.rabbit_list)
+            self.rabbit_list = new_rabbit_list.new_rabbit_list
+
+
         if ascending_month == self.month_input:
             print(f"The total number of alive rabbits is: {len(self.rabbit_list)}")
             print(f"The total number of dead rabbits is: {self.dead_rabbits}")
-
-
-initiator = Enclosure()
-initiator.simulation_rate()
