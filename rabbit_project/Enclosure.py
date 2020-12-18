@@ -3,6 +3,7 @@ from rabbit_project.Male_Rabbit import MaleRabbit
 from rabbit_project.Female_Rabbit import FemaleRabbit
 from rabbit_project.Breeding import RabbitBreeding
 import json
+
 f = open('rabbit_project/rabbit_default.json')
 rabbit_config = json.load(f)
 
@@ -19,10 +20,17 @@ class Enclosure():
         # Initialise the rabbit list by inheriting it from the other group
         # self.rabbit_list = Breeding.self.function.self.rabbit_list
         self.dead_rabbits = 0
-        self.alive_per_month_male = 0
-        self.alive_per_month_female = 0
+        self.alive_per_month_male_rabbit = 0
+        self.alive_per_month_female_rabbit = 0
         self.rabbit_list = []
         self.num_starting_rabbits = rabbit_config['num_starting_rabbits']
+
+        # Foxes Info
+        self.dead_foxes = 0
+        self.alive_per_month_male_fox = 0
+        self.alive_per_month_female_fox = 0
+        self.fox_list = []
+        self.num_starting_foxes = rabbit_config['num_starting_foxes']
 
     def starting_rabbits(self):
         # This method is called at the very start of the simulation to create a starting pair
@@ -32,20 +40,42 @@ class Enclosure():
             else:
                 self.rabbit_list.append(FemaleRabbit())
 
+    def starting_foxes(self):
+        # This method is called at the very start of the simulation to create a starting pair
+        for fox in range(self.num_starting_foxes):
+            if fox % 2 == 0:
+                self.fox_list.append(MaleFox())
+            else:
+                self.fox_list.append(FemaleFox())
 
+    # --------------------------------------------------------------------------
     def rabbit_gender_status(self):
         # This method counts how many males and females are alive each month, resetting on each iteration
-        self.alive_per_month_male = 0
-        self.alive_per_month_female = 0
+        self.alive_per_month_male_rabbit = 0
+        self.alive_per_month_female_rabbit = 0
         for rabbit in self.rabbit_list:
             if rabbit.sex == "M":
-                self.alive_per_month_male += 1
+                self.alive_per_month_male_rabbit += 1
             elif rabbit.sex == "F":
-                self.alive_per_month_female += 1
-        print(f"Male rabbits alive is {self.alive_per_month_male}")
-        print(f"Female rabbits alive is {self.alive_per_month_female}")
+                self.alive_per_month_female_rabbit += 1
+        print(f"Male rabbits alive is {self.alive_per_month_male_rabbit}")
+        print(f"Female rabbits alive is {self.alive_per_month_female_rabbit}")
         print('\n')
 
+    def fox_gender_status(self):
+        # This method counts how many males and females are alive each month, resetting on each iteration
+        self.alive_per_month_male_fox = 0
+        self.alive_per_month_female_fox = 0
+        for fox in self.fox_list:
+            if fox.sex == "M":
+                self.alive_per_month_male_fox += 1
+            elif fox.sex == "F":
+                self.alive_per_month_female_fox += 1
+        print(f"Male foxes alive is {self.alive_per_month_male_fox}")
+        print(f"Female foxes alive is {self.alive_per_month_female_fox}")
+        print('\n')
+
+    # -------------------------------------------------------------------------------
     # def rabbit_alive_status(self):
     #     # This method keeps track of the total that are alive and removes
     #     for rabbit in self.rabbit_list:
@@ -62,12 +92,29 @@ class Enclosure():
         self.dead_rabbits += (len(self.rabbit_list) - len(alive_rabbits))
         self.rabbit_list = alive_rabbits
 
+    def _age_foxes(self):
+        for fox in self.fox_list:
+            fox.aging()
+        alive_foxes = [x for x in self.fox_list if x.dead != True]
+        self.dead_foxes += (len(self.fox_list) - len(alive_foxes))
+        self.fox_list = alive_foxes
+
+    # ------------------------------------------------------------------------------------
+
+    def _foxes_eat(self):
+        for i in range(len(self.fox_list)):
+            for i in range(20):
+                if len(self.rabbit_list) >= 0:
+                    self.rabbit_list.pop(random.randint(0, len(self.rabbit_list - 1)))
+
+    # -------------------------------------------------------------------------------------
+
     def simulation_start(self):
 
         # Here the method prints the month for each iteration, at 1 month per second
         self.starting_rabbits()
+        self.starting_foxes()
         ascending_month = 0
-
 
         while ascending_month != self.month_input:
             time.sleep(self.sim_rate)
@@ -81,19 +128,27 @@ class Enclosure():
             #     # rabbit.aging has built in functions that call upon more methods
             #     rabbit.aging()
             self._age_rabbits()
+            self._age_foxes()
 
             # Calls the method that checks whether they are alive or dead
             # self.rabbit_alive_status()
 
             # Calls the method that checks how many are alive for each gender during this month
             self.rabbit_gender_status()
+            self.rabbit_gender_foxes()
 
-            #call breeding function
+            self._foxes_eat()
+
+            # call breeding function
             new_rabbit_list = RabbitBreeding(self.rabbit_list)
             self.rabbit_list = new_rabbit_list.new_rabbit_list
 
+            new_fox_list = FoxBreeding(self.fox_list)
+            self.fox_list = new_fox_list.new_fox_list
 
         if ascending_month == self.month_input:
             print(f"The total number of alive rabbits is: {len(self.rabbit_list)}")
             print(f"The total number of dead rabbits is: {self.dead_rabbits}")
 
+            print(f"The total number of alive foxes is: {len(self.fox_list)}")
+            print(f"The total number of dead foxes is: {self.dead_foxes}")
