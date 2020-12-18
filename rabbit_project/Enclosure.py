@@ -67,8 +67,8 @@ class Enclosure():
                 self.alive_per_month_male_rabbit += 1
             elif rabbit.sex == "F":
                 self.alive_per_month_female_rabbit += 1
-        print(f"Male rabbits alive is {self.alive_per_month_male_rabbit}")
-        print(f"Female rabbits alive is {self.alive_per_month_female_rabbit}")
+        print(f"Male rabbits alive is {'{:,}'.format(self.alive_per_month_male_rabbit)}")
+        print(f"Female rabbits alive is {'{:,}'.format(self.alive_per_month_female_rabbit)}")
         print('\n')
 
     def fox_gender_status(self):
@@ -80,8 +80,8 @@ class Enclosure():
                 self.alive_per_month_male_fox += 1
             elif fox.sex == "F":
                 self.alive_per_month_female_fox += 1
-        print(f"Male foxes alive is {self.alive_per_month_male_fox}")
-        print(f"Female foxes alive is {self.alive_per_month_female_fox}")
+        print(f"Male foxes alive is {'{:,}'.format(self.alive_per_month_male_fox)}")
+        print(f"Female foxes alive is {'{:,}'.format(self.alive_per_month_female_fox)}")
         print('\n')
 
     # -------------------------------------------------------------------------------
@@ -165,9 +165,9 @@ class Enclosure():
             self._foxes_eat()
 
         if ascending_month == self.month_input:
-            print(f"The total number of alive rabbits is: {len(self.rabbit_list)}")
-            print(f"The total number of dead rabbits is: {self.dead_rabbits}")
-            print(f"The total number of eaten rabbits is: {self.eaten_rabbits}")
+            print(f"The total number of alive rabbits is: {'{:,}'.format(len(self.rabbit_list))}")
+            print(f"The total number of dead rabbits is: {'{:,}'.format(self.dead_rabbits)}")
+            print(f"The total number of eaten rabbits is: {'{:,}'.format(self.eaten_rabbits)}")
 
-            print(f"The total number of alive foxes is: {len(self.fox_list)}")
-            print(f"The total number of dead foxes is: {self.dead_foxes}")
+            print(f"The total number of alive foxes is: {'{:,}'.format(len(self.fox_list))}")
+            print(f"The total number of dead foxes is: {'{:,}'.format(self.dead_foxes)}")
