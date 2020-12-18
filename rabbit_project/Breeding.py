@@ -19,7 +19,6 @@ class RabbitBreeding():
         self.female_fertility = rabbit_config['female_fertility']
 
 
-
         self.new_population()
 
     def new_population(self):

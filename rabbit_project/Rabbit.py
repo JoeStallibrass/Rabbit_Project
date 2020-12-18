@@ -33,6 +33,5 @@ class Rabbit:
 
 
 r = Rabbit()
-print(r.maturity_age)
 
 
