@@ -7,6 +7,7 @@ f = open('rabbit_project/rabbit_default.json')
 rabbit_config = json.load(f)
 
 
+
 class Enclosure():
 
     def __init__(self):
