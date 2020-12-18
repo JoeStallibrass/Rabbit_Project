@@ -39,4 +39,3 @@ class Fox:
 
 
 f = Fox()
-print(f.maturity_age)

@@ -21,7 +21,6 @@ class Enclosure():
         self.year_input = rabbit_config['sim_duration_years']
         # The program runs on a monthly basis, so years converted to months and proceeds
         self.month_input = self.year_input * 12
-        print(self.month_input)
         self.sim_rate = rabbit_config['sim_rate']
         # Initialise the rabbit list by inheriting it from the other group
         # self.rabbit_list = Breeding.self.function.self.rabbit_list
