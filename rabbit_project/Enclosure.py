@@ -1,12 +1,17 @@
 import time
+import random
 from rabbit_project.Male_Rabbit import MaleRabbit
 from rabbit_project.Female_Rabbit import FemaleRabbit
 from rabbit_project.Breeding import RabbitBreeding
+from rabbit_project.Male_Fox import MaleFox
+from rabbit_project.Female_Fox import FemaleFox
+from rabbit_project.Fox_Breeding import FoxBreeding
 import json
 
 f = open('rabbit_project/rabbit_default.json')
 rabbit_config = json.load(f)
-
+g = open('rabbit_project/fox_default.json')
+fox_config = json.load(g)
 
 class Enclosure():
 
@@ -16,6 +21,7 @@ class Enclosure():
         self.year_input = rabbit_config['sim_duration_years']
         # The program runs on a monthly basis, so years converted to months and proceeds
         self.month_input = self.year_input * 12
+        print(self.month_input)
         self.sim_rate = rabbit_config['sim_rate']
         # Initialise the rabbit list by inheriting it from the other group
         # self.rabbit_list = Breeding.self.function.self.rabbit_list
@@ -24,13 +30,16 @@ class Enclosure():
         self.alive_per_month_female_rabbit = 0
         self.rabbit_list = []
         self.num_starting_rabbits = rabbit_config['num_starting_rabbits']
+        self.eaten_rabbits = 0
 
         # Foxes Info
         self.dead_foxes = 0
         self.alive_per_month_male_fox = 0
         self.alive_per_month_female_fox = 0
         self.fox_list = []
-        self.num_starting_foxes = rabbit_config['num_starting_foxes']
+        self.num_starting_foxes = fox_config['num_starting_foxes']
+        self.num_rabbits_eaten = fox_config['num_rabbits_eaten']
+        self.integrating_month = fox_config['integrating_month']
 
     def starting_rabbits(self):
         # This method is called at the very start of the simulation to create a starting pair
@@ -102,10 +111,18 @@ class Enclosure():
     # ------------------------------------------------------------------------------------
 
     def _foxes_eat(self):
-        for i in range(len(self.fox_list)):
-            for i in range(20):
-                if len(self.rabbit_list) >= 0:
-                    self.rabbit_list.pop(random.randint(0, len(self.rabbit_list - 1)))
+        for fox in self.fox_list:
+            if fox.rabbit_eating_maturity:
+                for i in range(self.num_rabbits_eaten):
+                    if len(self.rabbit_list) >= 1:
+                        self.rabbit_list.pop(random.randint(0, len(self.rabbit_list)-1))
+                        self.dead_rabbits += 1
+                        self.eaten_rabbits += 1
+                    elif len(self.rabbit_list) == 1:
+                        self.rabbit_list.pop()
+                        self.dead_rabbits += 1
+                        self.eaten_rabbits += 1
+
 
     # -------------------------------------------------------------------------------------
 
@@ -113,10 +130,14 @@ class Enclosure():
 
         # Here the method prints the month for each iteration, at 1 month per second
         self.starting_rabbits()
-        self.starting_foxes()
         ascending_month = 0
 
         while ascending_month != self.month_input:
+
+            if ascending_month == self.integrating_month:
+                self.starting_foxes()
+
+
             time.sleep(self.sim_rate)
 
             ascending_month += 1
@@ -132,23 +153,21 @@ class Enclosure():
 
             # Calls the method that checks whether they are alive or dead
             # self.rabbit_alive_status()
-
-            # Calls the method that checks how many are alive for each gender during this month
-            self.rabbit_gender_status()
-            self.rabbit_gender_foxes()
-
-            self._foxes_eat()
-
-            # call breeding function
             new_rabbit_list = RabbitBreeding(self.rabbit_list)
             self.rabbit_list = new_rabbit_list.new_rabbit_list
 
             new_fox_list = FoxBreeding(self.fox_list)
             self.fox_list = new_fox_list.new_fox_list
+            # Calls the method that checks how many are alive for each gender during this month
+            self.rabbit_gender_status()
+            self.fox_gender_status()
+
+            self._foxes_eat()
 
         if ascending_month == self.month_input:
             print(f"The total number of alive rabbits is: {len(self.rabbit_list)}")
             print(f"The total number of dead rabbits is: {self.dead_rabbits}")
+            print(f"The total number of eaten rabbits is: {self.eaten_rabbits}")
 
             print(f"The total number of alive foxes is: {len(self.fox_list)}")
             print(f"The total number of dead foxes is: {self.dead_foxes}")

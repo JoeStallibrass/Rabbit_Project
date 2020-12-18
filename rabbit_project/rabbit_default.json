@@ -1,1 +1,1 @@
-{"life_expectancy_months": 60, "maturity_age_months": 3, "sim_duration_years": 6, "num_starting_rabbits": 2, "sim_rate": 1, "max_num_babies": 15, "ratio_male_to_female": 0.5, "male_availability_recharge": 1, "female_availability_recharge": 1, "female_fertility": 0.5}
+{"life_expectancy_months": 60, "maturity_age_months": 3, "sim_duration_years": 3, "num_starting_rabbits": 2, "sim_rate": 1, "max_num_babies": 14, "ratio_male_to_female": 0.5, "male_availability_recharge": 1, "female_availability_recharge": 1, "female_fertility": 0.5}
